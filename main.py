@@ -19,16 +19,17 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 class Player(GameSprite):
-    def update(self):
+    def update(self, up, down):
         keys = key.get_pressed()
 
-        if keys[K_UP] and self.rect.y > 5:
+        if keys[up] and self.rect.y > self.speed:
             self.rect.y -= 5
-        if keys[K_DOWN] and self.rect.y < window_h - 65:
-            self.rect.y += 5
+        if keys[down] and self.rect.y < window_h - 200:
+            self.rect.y += self.speed
 
 
-player = Player("racket.png", 50, 300, 10)
+player = Player("racket.png", 50, 300, 5)
+player1 = Player("racket.png", (window_w - 50), 300, 5)
 
 finish = False
 game = True
@@ -40,9 +41,11 @@ while game:
 
     window.fill((0,255,255))
 
-    player.update()
+    player.update(K_w, K_s)
     player.reset()
 
+    player1.update(K_UP, K_DOWN)
+    player1.reset()
 
     display.update()
 
